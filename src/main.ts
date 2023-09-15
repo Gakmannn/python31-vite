@@ -1,4 +1,5 @@
 import './style.css'
+import {login} from './login'
 setTimeout(() => { console.log('log from timeout') }, 0)
 console.log('hello world')
 console.log(10 / 0, 'sfdsfsd', false)
@@ -3761,15 +3762,95 @@ const newsBlock = document.getElementById('news')
 
 newsBlock?.addEventListener('click', (e)=>{
   const target = e.target as HTMLElement
+  if (target.className != 'close') return
   const p = newsBlock.querySelectorAll('p')
   const close = newsBlock.querySelectorAll('.close')
   const isHidden = p ? p[0].hidden : false
-  if (target.className == 'close' && p && close) {
+  if (p && close) {
     for (let i=0; i<p.length; i++) {
       p[i].hidden = !isHidden
       close[i].textContent = !isHidden ? '[v]' : '[x]'
     }
-
   }
 }, {passive:true})
 
+// Всплытие
+// Принцип всплытия очень простой.
+// Когда на элементе происходит событие, обработчики сначала срабатывают на нём, потом на его родителе, затем выше и так далее, вверх по цепочке предков.
+
+// Чтобы сгенерировать событие из кода, вначале надо создать объект события.
+
+// Базовый конструктор Event(name, options) принимает обязательное имя события и options – объект с двумя свойствами:
+
+// bubbles: true чтобы событие всплывало.
+// cancelable: true если мы хотим, чтобы event.preventDefault() работал.
+// Особые конструкторы встроенных событий MouseEvent, KeyboardEvent и другие принимают специфичные для каждого конкретного типа событий свойства. Например, clientX для событий мыши.
+
+// Для пользовательских событий стоит применять конструктор CustomEvent. У него есть дополнительная опция detail, с помощью которой можно передавать информацию в объекте события. После чего все обработчики смогут получить к ней доступ через event.detail.
+
+// Несмотря на техническую возможность генерировать встроенные браузерные события типа click или keydown, пользоваться ей стоит с большой осторожностью.
+
+// Весьма часто, когда разработчик хочет сгенерировать встроенное событие – это вызвано «кривой» архитектурой кода.
+
+// Как правило, генерация встроенных событий полезна в следующих случаях:
+
+// Либо как явный и грубый хак, чтобы заставить работать сторонние библиотеки, в которых не предусмотрены другие средства взаимодействия.
+// Либо для автоматического тестирования, чтобы скриптом «нажать на кнопку» и посмотреть, произошло ли нужное действие.
+// Пользовательские события со своими именами часто создают для улучшения архитектуры, чтобы сообщить о том, что происходит внутри наших меню, слайдеров, каруселей и т.д.
+
+document.body.prepend(login('text', 'текст из другого модуля'))
+
+document.addEventListener('valueChange', (e)=>{
+  console.log((e as CustomEvent).detail)
+})
+
+arr = [0, 5, 'sfdsdf', 'dd', 8, false]
+
+let val ='dd'
+console.log(arr.find((el)=>el==val))
+console.log(arr.findIndex(el=>el==8))
+console.log(arr.indexOf(4))
+console.log(arr.filter(el=>el.length>1))
+console.log(arr[4])
+
+// функция, которая возвращает индекс элемента массива, если такой элемент в нём есть, иначе возвращает -1
+// аналогична методу массива indexOf
+function indexOf(arr: any[], val:any, startIndex=0) {
+  for (let i = startIndex;i<arr.length; i++) {
+    if (arr[i]==val) return i
+  }
+  return -1
+}
+
+let objArr = [{id: 1, name: "Вася"},
+  {id: 2, name: "Петя"},
+  {id: 3, name: "Маша"}
+]
+
+// функция, которая возвращает индекс первого объекта, если функция fn вернула истину, иначе возвращает -1
+// аналогична методу массива findIndex
+function findIndex(arr: any[], fn: Function, startIndex=0) {
+  for (let i = startIndex;i<arr.length; i++) {
+    if (fn(arr[i],i,arr)) return i
+  }
+  return -1
+}
+
+// функция, которая возвращает первый объект, если функция fn вернула истину, иначе возвращает undefined
+// аналогична методу массива find
+function find(arr: any[], fn:Function) {
+  for (let i=0;i<arr.length; i++) {
+    if (fn(arr[i], i, arr)) return arr[i]
+  }
+  return undefined
+}
+
+// функция, которая возвращает массив объектов, для которых функция fn вернула истину, иначе возвращает пустой массив
+// аналогична методу массива filter
+function filter(arr: any[], fn: Function) {
+  const newArr = [] as any[]
+  for (let i = 0; i < arr.length; i++) {
+    if (fn(arr[i], i, arr)) newArr.push(arr[i])
+  }
+  return newArr
+}
