@@ -3854,3 +3854,32 @@ function filter(arr: any[], fn: Function) {
   }
   return newArr
 }
+
+let isQ = false
+let isW = false
+
+function qwFunc(e:KeyboardEvent) {
+  if(e.type=='keydown') {
+    if (e.code == 'KeyQ') isQ = true
+    if (e.code == 'KeyW') isW = true
+  }
+  if(e.type=='keyup') {
+    if (e.code == 'KeyQ') isQ = false
+    if (e.code == 'KeyW') isW = false
+  }
+  if (isQ && isW) {
+    alert('Boom!!!')
+    isQ = isW = false
+  }
+}
+
+window.addEventListener('keydown', qwFunc)
+window.addEventListener('keyup', qwFunc)
+
+const textareaInput = document.querySelector('textarea')
+textareaInput?.addEventListener('keydown', (e)=>{
+  if(e.code=='Enter') {
+    console.log('value',(e.currentTarget as HTMLInputElement).value)
+    console.log('innerHTML', (e.currentTarget as HTMLInputElement).innerHTML)
+  }
+})
