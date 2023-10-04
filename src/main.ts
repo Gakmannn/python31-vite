@@ -3983,3 +3983,88 @@ function testLoaded() {
 
 // каждое изображение в разрешении 100x100, итоговая сумма их ширин должна быть 300
 preloadImages(sources, testLoaded);
+
+const mailLabel = document.forms[0].querySelector('label')
+const mailInput = document.forms[0].elements[0] as HTMLInputElement
+// const mailInput2 = document.querySelector('#mail') as HTMLInputElement
+const mailButton = document.forms[0].elements[1] as HTMLButtonElement
+const mailInputRect = mailInput.getBoundingClientRect()
+
+// mailInput2.value = 'дыня'
+document.forms[0].onsubmit = () => {return false}
+
+mailButton.addEventListener('click', checkMail)
+mailInput.addEventListener('keypress',(e:KeyboardEvent) => {
+  if (e.key == 'Enter') {
+    checkMail()
+  }
+})
+mailInput.addEventListener('input',function() {
+  if (this.value == 'дыня') {
+    const form = this.parentElement as HTMLFormElement
+    form.innerHTML = ''
+    form.style.height = '500px'
+    form.style.background = 'url(https://fikiwiki.com/uploads/posts/2022-02/1645022772_11-fikiwiki-com-p-kartinki-dinya-12.jpg)'    
+    console.log(mailButton)
+  }
+})
+
+function checkMail() {
+
+  // !Проверка на кодовое слово
+  if (mailInput.value == 'арбуз') {
+    mailInput.style.backgroundColor = 'red'
+    mailInput.style.border = '8px solid green'
+    mailInput.style.borderRadius = '50%'
+    mailInput.style.fontSize = '18px'
+    mailInput.style.width = mailInputRect.width/3 + 'px'
+    mailInput.style.height = mailInputRect.width/5 + 'px'
+    mailInput.value =`':. "; .' :."`
+  }
+
+  let checked = true
+  let message = 'У почты '
+  const messageDetails:string[] = []
+  const checkDog = mailInput.value.split('@')
+  if (mailInput.value) {
+    if (checkDog.length == 2) {
+      if (!checkDog[0].length) {
+        checked = false
+        messageDetails.push('отсутствует имя ящика')
+      }
+      const host = checkDog[1].split('.')
+      if (host.length == 2) {
+        if (!host[0].length) {
+          checked = false
+          messageDetails.push('отсутствует имя домена')
+        }
+        if (!host[1].length) {
+          checked = false
+          messageDetails.push('отсутствует имя доменной зоны')
+        }
+      } else {
+        checked = false
+        message = 'У почты обязательно должен быть указана доменная зона верхнго уровня'
+      }
+    } else {
+      checked = false
+      message = 'У почты обязательно должен быть символ @'
+    }
+  } else {
+    checked = false
+    message = 'Вы ничего не ввели'
+  }
+  if (!checked) {
+    if (mailLabel) {
+      mailLabel.style.color = 'red'
+      mailLabel.textContent = message + messageDetails.join(', ') + '.'
+    }
+  } else {
+    if (mailLabel) {
+      mailLabel.style.color = 'green'
+      mailLabel.textContent = 'Всё в порядке'
+    }
+    // оправляем/сохраняем почту
+  }
+}
+
