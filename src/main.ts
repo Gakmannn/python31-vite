@@ -13,6 +13,7 @@ setTimeout(() => { h2.innerHTML = '<br class="myClass">Safary' }, 3000)
 Это - многострочный комментарий.
 */
 let message = 1
+sayHiBye('10', '12')
 message = 2 + 3 + 2
 const daysInWeek = message
 console.log(daysInWeek)
@@ -4068,3 +4069,43 @@ function checkMail() {
   }
 }
 
+// С помощью блоков {...} мы можем изолировать часть кода, выполняющую свою собственную задачу, с переменными, принадлежащими только ей:
+{
+  // выполняем некоторые действия с локальной переменной, которые не должны быть видны снаружи
+  let message = "Hello" // переменная видна только в этом блоке
+  console.log('inner message',message) // Hello
+}
+console.log('global message',message) // 11
+
+function sayHiBye(firstName: string, lastName: string) {
+
+  // функция-помощник, которую мы используем ниже
+  function getFullName() {
+    return obr + ' ' + firstName + " " + lastName + " " + message
+  }
+  
+  const obr = 'Mr.'
+  
+  console.log( "############Hello, " + getFullName() )
+  console.log( "############Bye, " + getFullName() )
+  
+}
+
+sayHiBye('10', '12')
+
+function makeCounter(count:number) {
+  const countersDiv = document.getElementById('counters')
+  const button = document.createElement('button')
+  button.textContent = count.toFixed()
+  button.onclick = function () {
+    button.textContent = (++count).toFixed()
+  }
+  countersDiv?.append(button)
+}
+
+makeCounter(0)
+makeCounter(5)
+makeCounter(5)
+makeCounter(5)
+makeCounter(5)
+makeCounter(10)
