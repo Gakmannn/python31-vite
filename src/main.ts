@@ -4146,3 +4146,42 @@ try {
 // Проброс исключения – это очень важный приём обработки ошибок: блок catch обычно ожидает и знает, как обработать определённый тип ошибок, поэтому он должен пробрасывать дальше ошибки, о которых он не знает.
 
 // Даже если у нас нет try..catch, большинство сред позволяют настроить «глобальный» обработчик ошибок, чтобы ловить ошибки, которые «выпадают наружу». В браузере это window.onerror.
+
+// !Intersection Observer
+// ?https://doka.guide/js/intersection-observer/
+
+const observerOptions = {
+  // root: ,
+  rootMargin: '15px 0px',
+  threshold: [0, 0.5, 0.95],
+}
+
+const callback = (entries: IntersectionObserverEntry[]) => {
+  entries.forEach((el) => {
+    console.log(el.intersectionRatio)
+    if (el.isIntersecting) {
+      const target = el.target as HTMLDivElement
+      if (el.intersectionRatio >= 0 && el.intersectionRatio < 0.45) {
+        target.classList.add('green')
+        target.classList.remove('blue')
+        target.classList.remove('red')
+      }
+      
+      if (el.intersectionRatio >= 0.45 && el.intersectionRatio < 0.75) {
+        target.classList.remove('green')
+        target.classList.add('blue')
+        target.classList.remove('red')
+      }
+      
+      if (el.intersectionRatio > 0.90) {
+        target.classList.remove('green')
+        target.classList.remove('blue')
+        target.classList.add('red')
+      }
+    }
+  })
+}
+
+const observer = new IntersectionObserver(callback, observerOptions)
+
+observer.observe((newsBlock as HTMLDivElement))

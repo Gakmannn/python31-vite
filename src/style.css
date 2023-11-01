@@ -40,10 +40,20 @@ a {
 .news {
   max-width: 600px;
   margin: 0 auto;
-  background: #edf5e1;
   padding: 10px 20px 10px;
   border-top: solid 2px #c4df9b;
   position: relative;
+  /* transition: background-color 0.5s; */
+}
+
+.green {
+  background-color: #edf5e1;
+}
+.blue {
+  background-color: #1da9e1;
+}
+.red {
+  background-color: #ed55e1;
 }
 
 .close {
