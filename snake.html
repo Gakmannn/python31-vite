@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      background-color: rgb(198, 194, 194);
+    }
+    #game {
+      width: 500px;
+      height: 500px;
+      margin: 50px auto;
+      border: 3px gray solid;
+      border-radius: 5px;
+      box-sizing: border-box;
+      line-height: 0;
+    }
+    #game div {
+      width: calc(100%/15);
+      height: calc(100%/15);
+      display: inline-block;
+      background-color: greenyellow;
+    }
+    #game .snake {
+      background-color: green;
+    }
+    #game .rabbit {
+      background-color: brown;
+    }
+  </style>
+</head>
+
+<body>
+  <a href="index.html">Назад</a>
+
+  <div id="game"></div>
+
+  <script type="module" src="/src/snake.ts"></script>
+</body>
+
+</html>

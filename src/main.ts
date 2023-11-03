@@ -4185,3 +4185,14 @@ const callback = (entries: IntersectionObserverEntry[]) => {
 const observer = new IntersectionObserver(callback, observerOptions)
 
 observer.observe((newsBlock as HTMLDivElement))
+
+const dinamicTextDiv = document.getElementById('dinamicText') as HTMLDivElement
+// const dinamicTextDiv1 = document.querySelector('#dinamicText')
+
+function dinamicWrite(el:HTMLDivElement, text:string, speed:number) {
+  for (let i=0; i<text.length; i++) {
+    setTimeout(() => { el.textContent += text[i]}, 1000*i/speed)
+  }
+}
+
+dinamicWrite(dinamicTextDiv, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti, nesciunt! Unde animi repudiandae dolorem eius quidem maxime minima optio ex saepe omnis ab expedita veritatis nisi natus quas, ad nemo?', 100)
