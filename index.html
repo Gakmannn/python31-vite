@@ -29,6 +29,43 @@
       border-color: red;
       box-shadow: 0px 0px 4px 1px red;
     }
+    .run {
+      margin: 10px;
+      background: url(JBnJItf.png) no-repeat;
+      width: 99px;
+      height: 134px;
+      position: relative;
+      animation: run 0.5s infinite steps(5)
+      /* , runRun linear 2.5s infinite; */
+    }
+    .run div {
+      background-color: white;
+      background-color: white;
+      position: absolute;
+      height: 100%;
+      width: 28px;
+    }
+    .runJs {
+      width: 76px;
+      background: url(JBnJItf.png) no-repeat;
+      height: 134px;
+    }
+    @keyframes run {
+      0% {
+        background-position:12px 0;
+      }
+      100% {
+        background-position: -354px 0;
+      }
+    }
+    @keyframes runRun {
+      0% {
+        margin-left: -10px;
+      }
+      100% {
+        margin-left: calc(100% - 100px);
+      }
+    }
   </style>
 </head>
 
@@ -41,12 +78,23 @@
   <a href="https://quickref.me/javascript" target="_blanc">Шпоры 4</a>
   <a href="https://wp-kama.ru/id_5875/30-css-selektorov.html" target="_blanc">Селекторы</a>
   <a href="snake.html">Змейка</a>
+  <a href="chrome://inspect/#devices">DEV tools для телефона</a>
+  <a href="https://ru.hexlet.io/blog/posts/kak-ispolzovat-css-sprayty-dlya-uvelicheniya-skorosti-zagruzki-veb-stranits">Спрайты</a>
+  <a href="https://doka.guide/html/svg-sprite">SVG спрайты</a>
 
   <form style="padding: 20px 0; background-color: antiquewhite;">
     <label for="mail">Введите почту</label><br>
     <input type="text" id="mail" placeholder="почта">
     <button>Отправить</button>
   </form>
+
+  <div class="run">
+    <div></div>
+
+  </div>
+  
+  <div style="background-position: -5px 0;" class="runJs">
+  </div>
 
   <div id="dinamicText"></div>
 

@@ -3965,6 +3965,8 @@ function preloadImages(sources:string[], callback:Function) {
   }
 }
 
+// preloadImages(sources, ()=>alert('yes'))
+
 // добавляем случайные символы к ссылкам, чтобы избежать кеширования
 for (let i = 0; i < sources.length; i++) {
   sources[i] += '?' + Math.random();
@@ -4000,6 +4002,12 @@ mailInput.addEventListener('keypress',(e:KeyboardEvent) => {
     checkMail()
   }
 })
+
+mailInput.addEventListener('click',function() {
+  const dinia = document.createElement('img')
+  dinia.src = 'https://fikiwiki.com/uploads/posts/2022-02/1645022772_11-fikiwiki-com-p-kartinki-dinya-12.jpg'
+})
+
 mailInput.addEventListener('input',function() {
   if (this.value == 'дыня') {
     const form = this.parentElement as HTMLFormElement
@@ -4196,3 +4204,38 @@ function dinamicWrite(el:HTMLDivElement, text:string, speed:number) {
 }
 
 dinamicWrite(dinamicTextDiv, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti, nesciunt! Unde animi repudiandae dolorem eius quidem maxime minima optio ex saepe omnis ab expedita veritatis nisi natus quas, ad nemo?', 100)
+
+const animDiv = document.querySelector('.runJs') as HTMLDivElement
+let position = -5
+function animation() {
+  setInterval(()=>{
+    animDiv.style.backgroundPositionX = position + 'px'
+    switch (position) {
+      case -5: {
+        position-=80 // position = position - 77.5
+        break
+      }
+      case -85: {
+        position-=77.5 
+        break
+      }
+      case -162.5: {
+        position-=76.5
+        break
+      }
+      case -239: {
+        position-=67
+        break
+      }
+      case -306: {
+        position-=67
+        break
+      }
+      case -373: {
+        position=-5
+        break
+      }
+    }
+  },100)
+}
+animation()

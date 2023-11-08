@@ -19,6 +19,8 @@ const initMap = [
   [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 ]
 
+var Ammm = new Audio('z_uk-kushaet.mp3')
+
 const cloneMap = (map:any[])=>{
   const newMap = []
   for (let str of map) {
@@ -82,7 +84,10 @@ function render() {
       return
     }
     if (map[x][y]==2) {
+      Ammm.pause()
+      Ammm.currentTime = 0.0
       snake.push({ x, y, d, lastD })
+      Ammm.play()
       generateRabbit()
     }
     snake.unshift({ x, y, d, lastD })
