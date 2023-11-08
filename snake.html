@@ -18,18 +18,57 @@
       border-radius: 5px;
       box-sizing: border-box;
       line-height: 0;
+      background-color: greenyellow;
     }
     #game div {
       width: calc(100%/15);
       height: calc(100%/15);
       display: inline-block;
-      background-color: greenyellow;
     }
     #game .snake {
       background-color: green;
     }
+    .round {
+      border-radius: 50%;
+    }
+    .u {
+      border-radius: 50% 50% 0 0;
+    }
+    .r {
+      border-radius: 0 50% 50% 0;
+    }
+    .d {
+      border-radius: 0 0 50% 50%;
+    }
+    .l {
+      border-radius: 50% 0 0 50%;
+    }
+    .single {
+      border-radius: 100% 0% 100% 100% !important;
+    }
+    .single.l {
+      transform: rotate(45deg);
+    }
+    .single.r {
+      transform: rotate(-135deg);
+    }
+    .single.u {
+      transform: rotate(135deg);
+    }
+    .single.d {
+      transform: rotate(-45deg);
+    }
+    .dl {border-radius: 100%/100% 0 0 0 !important;}
+    .dr {border-radius: 0 100%/100% 0 0 !important;}
+    .ld {border-radius: 0 100%/100% 0 0 !important;}
+    .lu {border-radius: 0 0 100%/100% 0 !important;}
+    .rd {border-radius: 100%/100% 0 0 0 !important;}
+    .ru {border-radius: 0 0 0 100%/100% !important;}
+    .ul {border-radius: 100%/100% 0 0 0 !important;}
+    .ur {border-radius: 0 0 100%/100% 0 !important;}
     #game .rabbit {
       background-color: brown;
+      border-radius: 50%;
     }
   </style>
 </head>
