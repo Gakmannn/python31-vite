@@ -3561,11 +3561,16 @@ let clone2 = Object.defineProperties({}, Object.getOwnPropertyDescriptors(obj));
 // На практике эти методы используются редко. Но метко
 
 async function download() {
-  const request = await fetch('https://fakerapi.it/api/v1/products?_quantity=10') // Запрос данных с серверав
-  const data = await request.json() // Преобразуем json из запроса d объект
-  console.log(data)
-  for (let el of data.data) {
-    document.body.appendChild(renderCard(el)) // рендерим карточки, добавляя их в конец body
+  try {
+    const request = await fetch('https://fakerapi.it/api/v1/products?_quantity=10') // Запрос данных с серверав
+    const data = await request.json() // Преобразуем json из запроса d объект
+    console.log(data)
+    for (let el of data.data) {
+      document.body.appendChild(renderCard(el)) // рендерим карточки, добавляя их в конец body
+    }
+  } catch(e) {
+    console.log(e)
+    setTimeout(download,1000)
   }
 }
 
@@ -4239,3 +4244,149 @@ function animation() {
   },100)
 }
 animation()
+
+class ReadError extends Error {
+  constructor(message:string, cause:Error) {
+    super(message)
+    this.cause = cause;
+    this.name = 'ReadError';
+  }
+}
+
+class ValidationError extends Error {
+  constructor(message:string) {
+    super(message);
+    this.name = "ValidationError";
+  }
+}
+
+class PropertyRequiredError extends ValidationError {
+  property
+  constructor(property: string) {
+    super("Нет свойства: " + property);
+    this.name = "PropertyRequiredError";
+    this.property = property;
+  }
+}
+
+function validateUser(user:any) {
+  if (!user.age) {
+    throw new PropertyRequiredError("age");
+  }
+
+  if (!user.name) {
+    throw new PropertyRequiredError("name");
+  }
+}
+
+function readUser(json:string) {
+  let user;
+
+  try {
+    user = JSON.parse(json);
+  } catch (err) {
+    if (err instanceof SyntaxError) {
+      throw new ReadError("Синтаксическая ошибка", err);
+    } else {
+      throw err;
+    }
+  }
+
+  try {
+    validateUser(user);
+  } catch (err) {
+    if (err instanceof ValidationError) {
+      throw new ReadError("Ошибка валидации", err);
+    } else {
+      throw err;
+    }
+  }
+  return user
+}
+function getUser(json:string) {
+  try {
+    readUser(json);
+  } catch (e) {
+    if (e instanceof ReadError) {
+      alert(e);
+      // Исходная ошибка: SyntaxError:Unexpected token b in JSON at position 1
+      alert("Исходная ошибка: " + e.cause);
+    } else {
+      throw e;
+    }
+  }
+}
+
+const newUser1 = getUser('{"age":15, "name":"Niko"}')
+console.log(newUser1)
+
+// Мы можем наследовать свои классы ошибок от Error и других встроенных классов ошибок, но нужно позаботиться о свойстве name и не забыть вызвать super.
+// Мы можем использовать instanceof для проверки типа ошибок.Это также работает с наследованием.Но иногда у нас объект ошибки, возникшей в сторонней библиотеке, и нет простого способа получить класс.Тогда для проверки типа ошибки можно использовать свойство name.
+// Обёртывание исключений является распространённой техникой: функция ловит низкоуровневые исключения и создаёт одно «высокоуровневое» исключение вместо разных низкоуровневых.Иногда низкоуровневые исключения становятся свойствами этого объекта, как err.cause в примерах выше, но это не обязательно.
+
+function loadScript(src:string, callback:Function) {
+  let script = document.createElement('script');
+  script.src = src;
+  script.onload = () => callback(script);
+  document.head.append(script);
+}
+
+loadScript('https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.2.0/lodash.js', (script:any) => {
+  console.log(`Здорово, скрипт ${script.src} загрузился`);
+  // @ts-ignore
+  console.log(window._); // функция, объявленная в загруженном скрипте
+});
+
+
+console.log('before Promise')
+
+let promise = new Promise(function (resolve, reject) {
+  // resolve("done!")
+  // setTimeout(() => resolve("done!"), 1000);
+  setTimeout(() => reject("not done!"), 1000);
+});
+
+console.log('before Then')
+// resolve запустит первую функцию, переданную в .then
+// promise.then(
+//   result => console.log(result), // выведет "done!" через одну секунду
+//   error => console.log(error) // не будет запущена
+// )
+
+// Вызов .catch(f) – это сокращённый, «укороченный» вариант .then(null, f).
+promise
+  .then(result => console.log(result),) // выведет "done!" через одну секунду
+  .catch(e => console.log(e))
+  .finally(() => console.log('остановить индикатор загрузки'))
+
+// Вызов .finally(f) похож на .then(f, f), в том смысле, что f выполнится в любом случае, когда промис завершится: успешно или с ошибкой
+
+// Обработчик finally не получает результат предыдущего обработчика (у него нет аргументов). Вместо этого этот результат передается следующему подходящему обработчику.
+// Если обработчик finally возвращает что-то, это игнорируется.
+// Когда finally выдает ошибку, выполнение переходит к ближайшему обработчику ошибок.
+
+console.log('after Then')
+
+// !Событийный цикл: микрозадачи и макрозадачи
+// Более подробный алгоритм событийного цикла(хоть и упрощённый в сравнении со спецификацией):
+
+// Выбрать и исполнить старейшую задачу из очереди макрозадач(например, «script»).
+// Исполнить все микрозадачи:
+// Пока очередь микрозадач не пуста: - Выбрать из очереди и исполнить старейшую микрозадачу
+// Отрисовать изменения страницы, если они есть.
+// Если очередь макрозадач пуста – подождать, пока появится макрозадача.
+// Перейти к шагу 1.
+// Чтобы добавить в очередь новую макрозадачу:
+
+// Используйте setTimeout(f) с нулевой задержкой.
+// Этот способ можно использовать для разбиения больших вычислительных задач на части, чтобы браузер мог реагировать на пользовательские события и показывать прогресс выполнения этих частей.
+
+// Также это используется в обработчиках событий для отложенного выполнения действия после того, как событие полностью обработано(всплытие завершено).
+
+// Для добавления в очередь новой микрозадачи:
+
+// Используйте queueMicrotask(f).
+// Также обработчики промисов выполняются в рамках очереди микрозадач.
+// События пользовательского интерфейса и сетевые события в промежутках между микрозадачами не обрабатываются: микрозадачи исполняются непрерывно одна за другой.
+
+// Поэтому queueMicrotask можно использовать для асинхронного выполнения функции в том же состоянии окружения.
