@@ -4390,3 +4390,49 @@ console.log('after Then')
 // События пользовательского интерфейса и сетевые события в промежутках между микрозадачами не обрабатываются: микрозадачи исполняются непрерывно одна за другой.
 
 // Поэтому queueMicrotask можно использовать для асинхронного выполнения функции в том же состоянии окружения.
+
+// fetch('https://learn.javascript.ru/article/promise-chaining/user.json')
+// fetch('article/promise-chaining/user.json')
+fetch('snake.html')
+  // .then в коде ниже выполняется, когда удалённый сервер отвечает
+  .then(function (response) {
+    // response.text() возвращает новый промис,
+    // который выполняется и возвращает полный ответ сервера,
+    // когда он загрузится
+    return response.text()
+  })
+  .then(function (text) {
+    // ...и здесь содержимое полученного файла
+    console.log(text) // {"name": "iliakan", isAdmin: true}
+  })
+  .catch(e => console.log(e))
+
+fetch(`https://api.github.com/users/andreyka101`)
+  // Загружаем ответ в формате json
+  .then(response => response.json())
+  // Показываем аватар (githubUser.avatar_url) в течение 3 секунд (возможно, с анимацией)
+  .then(githubUser => {
+    // let img = document.createElement('img')
+    // img.src = githubUser.avatar_url
+    // img.className = "promise-avatar-example"
+    // document.body.prepend(img)
+
+    // setTimeout(() => img.remove(), 3000) // (*)
+    console.log(githubUser)
+    return githubUser
+  }).then(user => makeSomethingWithUser(user))
+
+let externalUser = {} as any
+console.log('externalUser', externalUser)
+
+function makeSomethingWithUser(user:any) {
+  console.log(user)
+  externalUser = user
+}
+
+const button = document.getElementById('readName') as HTMLButtonElement
+button.addEventListener('click', e => console.log('externalUser', externalUser))
+
+
+
+
