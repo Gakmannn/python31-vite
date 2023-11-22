@@ -3,12 +3,12 @@ let tovars = [] as any[]
 const korzina = [] as any[]
 
 function download() {
-  fetch('https://fakerapi.it/api/v1/products?_quantity=10')
+  // fetch('https://fakerapi.it/api/v1/products?_quantity=10')
+  fetch('store.json')
     .then(responce => responce.json())
     .then(data => {
-      console.log(data.data)
-      tovars = data.data
-      for (let el of data.data) {
+      tovars = data
+      for (let el of data) {
         document.body.insertAdjacentHTML('beforeend', renderCard(el)) // рендерим карточки, добавляя их в конец body
       }
     })
@@ -18,7 +18,7 @@ function download() {
 function renderCard(el: any) {
   return `
   <div style="display:flex; margin:0 auto; max-width: 700px; padding: 20px; gap: 20px">
-    <img style="min-width:200px" href="${el.image}">
+    <img style="min-width:200px" src="${el.image}">
     <div>
       <h4>${el.name}</h4>  
       <p>${el.description}</p>

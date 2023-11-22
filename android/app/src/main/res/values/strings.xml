@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">web-python-stake</string>
+    <string name="title_activity_main">web-python-stake</string>
+    <string name="package_name">ru.top.app</string>
+    <string name="custom_url_scheme">ru.top.app</string>
+</resources>
