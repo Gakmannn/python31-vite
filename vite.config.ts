@@ -13,6 +13,8 @@ export default {
         store: resolve(__dirname, 'store.html'),
         // @ts-ignore
         korzina: resolve(__dirname, 'korzina.html'),
+        // @ts-ignore
+        omdb: resolve(__dirname, 'omdb.html'),
       }
     }
   }

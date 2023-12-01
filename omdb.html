@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    form {
+      max-width: 300px;
+      margin: 20px auto;
+      padding: 20px;
+      border: 1px solid black;
+      border-radius: 10px;
+      background-color: antiquewhite;
+    }
+    .flex {
+      display: flex;
+      gap: 40px;
+    }
+    [type=submit] {
+      display: block;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <a href="index.html">Домой</a>
+
+  <form>
+    <div class="flex">
+      <div>
+        <p><label for="title">Название:</label></p>
+        <p><label for="type">Тип:</label></p>
+      </div>
+      <div>
+        <p><input id="title" type="text"></p>
+        <p>
+          <select name="type" id="type">
+            <option value="movie">Кино</option>
+            <option value="series">Сериал</option>
+            <option value="episode">Эпизод</option>
+          </select>
+        </p>
+      </div>
+    </div>
+    <input type="submit" value="Поиск!">
+  </form>
+
+  <div id="app"></div>
+  <div id="pagination"></div>
+  <!-- <audio src="z_uk-kushaet.mp3"></audio> -->
+  <script type="module" src="/src/omdb.ts"></script>
+</body>
+
+</html>
