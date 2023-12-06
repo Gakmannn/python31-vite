@@ -15,6 +15,8 @@ export default {
         korzina: resolve(__dirname, 'korzina.html'),
         // @ts-ignore
         omdb: resolve(__dirname, 'omdb.html'),
+        // @ts-ignore
+        yaPic: resolve(__dirname, 'yapic.html'),
       }
     }
   }

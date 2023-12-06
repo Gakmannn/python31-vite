@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    iframe {
+      width: 100%;
+      height: 800px;
+    }
+  </style>
+</head>
+
+<body>
+  <a href="index.html">Назад</a>
+
+  <form>
+    <div class="flex">
+      <div>
+        <p><label for="title">Что ищем</label></p>
+      </div>
+      <div>
+        <p><input id="title" type="text"></p>
+      </div>
+    </div>
+    <input type="submit" value="Поиск!">
+  </form>
+
+  <div id="result"></div>
+  <iframe frameborder="0"></iframe>
+
+  <!-- <audio src="z_uk-kushaet.mp3"></audio> -->
+  <script type="module" src="/src/yapic.ts"></script>
+</body>
+
+</html>
