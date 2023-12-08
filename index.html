@@ -5,8 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="node_modules/lite-youtube-embed/src/lite-yt-embed.css" />
-
+  
   <!-- ************ TESTS ************** -->
   <!-- добавим стили mocha для отображения результатов -->
   <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.2.0/mocha.css"> -->
@@ -67,6 +66,35 @@
         margin-left: calc(100% - 100px);
       }
     }
+    .lite-youtube-fallback {
+	aspect-ratio: 16 / 9; /* matches YouTube player */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	gap: 1em;
+	padding: 1em;
+	background-color: #000;
+	color: #fff;
+	text-decoration: none;
+}
+
+/* right-facing triangle "Play" icon */
+.lite-youtube-fallback::before {
+	display: block;
+	content: '';
+	border: solid transparent;
+	border-width: 2em 0 2em 3em;
+	border-left-color: red;
+}
+
+.lite-youtube-fallback:hover::before {
+	border-left-color: #fff;
+}
+
+.lite-youtube-fallback:focus {
+	outline: 2px solid red;
+}
   </style>
 </head>
 
@@ -140,7 +168,7 @@
   <button id="start">Start</button>
   <button id="stop">Stop</button>
 
-<lite-youtube videoid="8wysIxzqgPI" playlabel="Play: Keynote (Google I/O '18)"></lite-youtube>
+  <lite-youtube videoid="8wysIxzqgPI"></lite-youtube>
 
 <!-- <script>
   let script = document.createElement('script')
@@ -294,7 +322,6 @@
   gorserv.ru -->
 
   <script type="module" src="/src/main.ts"></script>
-  <script src="node_modules/lite-youtube-embed/src/lite-yt-embed.js" defer></script>
   <script>
     function deeping(e) {
         alert('погружение ' + this.tagName)

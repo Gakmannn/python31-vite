@@ -1,5 +1,6 @@
 import './style.css'
 import {login} from './login'
+import '@justinribeiro/lite-youtube'
 setTimeout(() => { console.log('log from timeout') }, 0)
 console.log('hello world')
 console.log(10 / 0, 'sfdsfsd', false)
