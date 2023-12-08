@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="node_modules/lite-youtube-embed/src/lite-yt-embed.css" />
 
   <!-- ************ TESTS ************** -->
   <!-- добавим стили mocha для отображения результатов -->
@@ -120,6 +121,11 @@
 
   <input type="range">
 
+  <!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/9pi2wPgpuTo?si=xlJuLGYk78hAVlJC"
+    title="YouTube video player" frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen></iframe> -->
+
   <form id="form" onclick="alert('form')">FORM
     <div id="div" onclick="alert('div')">DIV
       <p id="p" onclick="alert('p')">P</p>
@@ -133,6 +139,8 @@
   <h1 id="timer"></h1>
   <button id="start">Start</button>
   <button id="stop">Stop</button>
+
+<lite-youtube videoid="8wysIxzqgPI" playlabel="Play: Keynote (Google I/O '18)"></lite-youtube>
 
 <!-- <script>
   let script = document.createElement('script')
@@ -286,6 +294,7 @@
   gorserv.ru -->
 
   <script type="module" src="/src/main.ts"></script>
+  <script src="node_modules/lite-youtube-embed/src/lite-yt-embed.js" defer></script>
   <script>
     function deeping(e) {
         alert('погружение ' + this.tagName)
