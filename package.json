@@ -19,6 +19,7 @@
     "@capacitor/cli": "^5.5.1",
     "@capacitor/core": "^5.5.1",
     "@justinribeiro/lite-youtube": "^1.5.0",
+    "axios": "^1.6.2",
     "path": "^0.12.7"
   }
 }

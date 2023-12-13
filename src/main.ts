@@ -1,6 +1,7 @@
 import './style.css'
 import {login} from './login'
 import '@justinribeiro/lite-youtube'
+import axios from 'axios'
 setTimeout(() => { console.log('log from timeout') }, 0)
 console.log('hello world')
 console.log(10 / 0, 'sfdsfsd', false)
@@ -4043,7 +4044,7 @@ mailInput.addEventListener('input',function() {
   }
 })
 
-function checkMail() {
+async function checkMail() {
 
   // !Проверка на кодовое слово
   if (mailInput.value == 'арбуз') {
@@ -4098,6 +4099,16 @@ function checkMail() {
       mailLabel.style.color = 'green'
       mailLabel.textContent = 'Всё в порядке'
     }
+
+    const resp = await fetch('http://localhost:3002/mail', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify({ mail: mailInput.value })
+    })
+    const data = await resp.json()
+    alert(data?.mail + data.message)
     // оправляем/сохраняем почту
   }
 }
@@ -4507,3 +4518,36 @@ button.addEventListener('click', e => console.log('externalUser', externalUser))
 // body – данные для отправки(тело запроса) в виде текста, FormData, BufferSource, Blob или UrlSearchParams.
 // В следующих главах мы рассмотрим больше параметров и вариантов использования fetch.
 
+const FDButton = document.getElementById('FD')
+
+FDButton?.addEventListener('click', async (e)=>{
+  const fileInput = document.getElementById('file') as HTMLInputElement
+  const formData = new FormData()
+  // formData.append('name', 'Пётр')
+  formData.append('data', JSON.stringify({name:'Пётр'}))
+  if (fileInput.files && fileInput.files[0]) formData.append('file', fileInput.files[0], fileInput.files[0].name)
+  axios.post('http://localhost:3002/file', formData)
+  // await fetch('http://localhost:3002/file', {
+  //   method:'POST',
+  //   headers: { 'Content-Type': 'multipart/form-data;' },
+  //   body: formData
+  // })
+})
+
+// Объекты FormData используются, чтобы взять данные из HTML-формы и отправить их с помощью fetch или другого метода для работы с сетью.
+
+// Мы можем создать такой объект уже с данными, передав в конструктор HTML-форму – new FormData(form), или же можно создать объект вообще без формы и затем добавить к нему поля с помощью методов:
+
+// formData.append(name, value)
+// formData.append(name, blob, fileName)
+// formData.set(name, value)
+// formData.set(name, blob, fileName)
+// Отметим две особенности:
+
+// Метод set удаляет предыдущие поля с таким же именем, а append – нет. В этом их единственное отличие.
+// Чтобы послать файл, нужно использовать синтаксис с тремя аргументами, в качестве третьего как раз указывается имя файла, которое обычно, при <input type="file">, берётся из файловой системы.
+// Другие методы:
+
+// formData.delete(name)
+// formData.get(name)
+// formData.has(name)
