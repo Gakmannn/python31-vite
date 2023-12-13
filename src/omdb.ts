@@ -10,7 +10,7 @@ form.addEventListener('submit', async (e)=>{
   e.preventDefault()
   if (!title.value) return
   try {
-    const resp = await fetch(`http://www.omdbapi.com/?apikey=a821535d&s=${title.value}&type=${type.value}`)
+    const resp = await fetch(`https://www.omdbapi.com/?apikey=a821535d&s=${title.value}&type=${type.value}`)
     const data = await resp.json()
     renderPagination(data.totalResults, 1)
     render(data.Search)
