@@ -4523,15 +4523,19 @@ const FDButton = document.getElementById('FD')
 FDButton?.addEventListener('click', async (e)=>{
   const fileInput = document.getElementById('file') as HTMLInputElement
   const formData = new FormData()
-  // formData.append('name', 'Пётр')
+  formData.set('name', 'Пётр')
   formData.append('data', JSON.stringify({name:'Пётр'}))
   if (fileInput.files && fileInput.files[0]) formData.append('file', fileInput.files[0], fileInput.files[0].name)
-  axios.post('http://localhost:3002/file', formData)
-  // await fetch('http://localhost:3002/file', {
-  //   method:'POST',
-  //   headers: { 'Content-Type': 'multipart/form-data;' },
-  //   body: formData
-  // })
+  // axios.get('http://localhost:3002/file', formData)
+  // console.log(formData.get('name'))
+  await fetch('http://localhost:3000/data', {
+    method:'POST',
+    // headers: { 
+    //   'Content-Type': 'multipart/form-data;',
+    // },
+    body: formData
+  })
+  
 })
 
 // Объекты FormData используются, чтобы взять данные из HTML-формы и отправить их с помощью fetch или другого метода для работы с сетью.
@@ -4551,3 +4555,53 @@ FDButton?.addEventListener('click', async (e)=>{
 // formData.delete(name)
 // formData.get(name)
 // formData.has(name)
+
+const canvasElem = document.getElementById('canvasElem') as HTMLCanvasElement
+const submitCanvas = document.getElementById('submitCanvas') as HTMLButtonElement
+const saveCanvas = document.getElementById('saveCanvas') as HTMLButtonElement
+
+let draw = false
+canvasElem.addEventListener('mousedown', () => {
+  draw = true
+})
+canvasElem.addEventListener('mouseup', () => {
+  draw = false
+})
+
+let rect = canvasElem.getBoundingClientRect()
+
+canvasElem.onmousemove = function (e) {
+  if (draw) {
+    let ctx = canvasElem.getContext('2d') as CanvasRenderingContext2D
+    ctx.lineTo(e.clientX - rect.x, e.clientY - rect.y);
+    ctx.stroke();
+  }
+};
+
+
+saveCanvas.addEventListener('click', async() => {
+  let imageBlob = await new Promise(resolve => canvasElem.toBlob(resolve, 'image/jpg'))
+  // @ts-ignore
+  const blobUrl = URL.createObjectURL(imageBlob)
+  const link = document.createElement("a") // Or maybe get it from the current document
+  link.href = blobUrl
+  link.download = "image.jpg";
+  link.innerHTML = "Click here to download the file";
+  if (saveCanvas.parentElement) saveCanvas.parentElement.appendChild(link); // Or append it whereever you want
+})
+
+submitCanvas.addEventListener('click', async() => {
+  let imageBlob = await new Promise(resolve => canvasElem.toBlob(resolve, 'image/png'))
+
+  let formData = new FormData();
+  formData.append("firstName", "John");
+  // @ts-ignore
+  formData.append("image", imageBlob, "image.png");
+
+  let response = await fetch('http://localhost:3000/data', {
+    method: 'POST',
+    body: formData
+  });
+  let result = await response.json();
+  
+})

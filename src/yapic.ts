@@ -3,8 +3,22 @@ import './style.css'
 const form = document.forms[0]
 const title = form.querySelector('#title') as HTMLInputElement
 const resDiv = document.getElementById('result') as HTMLDivElement
+const button = document.querySelector('button') as HTMLButtonElement
 const frame = document.querySelector('iframe') as HTMLIFrameElement
 
+button.onclick = async (e) => {
+  // const res = await fetch('http://localhost:3000/translate')
+  // const data = await res.json()
+  // frame.srcdoc = data.data
+  
+  const res = await fetch('http://localhost:3000/data', {
+    method:'POST',
+    headers: {'Content-Type': 'application/json;charset=utf-8'},
+    body: JSON.stringify({ok:'client'})
+  })
+  const data = await res.json()
+  console.log(data)
+}
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault()
@@ -27,7 +41,7 @@ form.addEventListener('submit', async (e) => {
       const img = decodeURIComponent(data.slice(i + 8, srcEnd - 4))
       if (!imageArr.includes(img))  {
         imageArr.push(img)
-        resDiv.innerHTML += `<img src="${img}" width="100">`
+        resDiv.insertAdjacentHTML('beforeend', `<img src="${img}" width="100">`)
       }
       i++
     }

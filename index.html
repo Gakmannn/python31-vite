@@ -116,6 +116,7 @@
   <a href="omdb.html">OMDB</a>
   <a href="yapic.html">yaPic</a>
   <a href="https://www.selenium.dev/selenium/docs/api/javascript/index.html">Selenium</a>
+  <a href="https://badtry.net/prostoie-obiasnieniie-chto-takoie-webworke-y-v-js-i-kak-s-nimi-rabotat-web-worker-js-example/">Web worker</a>
   
   <form style="padding: 20px 0; background-color: antiquewhite;">
     <label for="mail">Введите почту</label><br>
@@ -125,7 +126,13 @@
   
   <input type="file" id="file">
   <button id="FD">Отправить FormData</button>
-  
+  <div style="margin: 50px 0;">
+    <canvas id="canvasElem" width="100" height="80" style="border:1px solid"></canvas>
+    <button id="submitCanvas">Отправить</button>
+    <button id="saveCanvas">Сохранить</button>
+  </div>
+  <a href="z_uk-kushaet.mp3">Скачать звук змеи</a>
+
   <div class="run">
     <div></div>
 
@@ -146,7 +153,25 @@
     . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
   </div>
 
-  <div id="counters"></div>
+  <style>
+    #counters {
+      background-color: firebrick;
+    }
+    .a {
+
+    }
+    .b {}
+    .c {
+
+    }
+    div.a {
+
+    }
+    .a.b {}
+    .a.c {}
+  </style>
+
+  <div id="counters" class="a b c"></div>
 
   <textarea cols="30" rows="10">text</textarea>
 
@@ -332,6 +357,7 @@
       form.addEventListener('click', deeping, { capture: true })
       div.addEventListener('click', deeping, { capture: true })
       p.addEventListener('click', deeping, { capture: true })
+
   </script>
 </body>
 
