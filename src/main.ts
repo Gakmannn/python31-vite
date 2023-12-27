@@ -4206,21 +4206,15 @@ const callback = (entries: IntersectionObserverEntry[]) => {
     if (el.isIntersecting) {
       const target = el.target as HTMLDivElement
       if (el.intersectionRatio >= 0 && el.intersectionRatio < 0.45) {
-        target.classList.add('green')
-        target.classList.remove('blue')
-        target.classList.remove('red')
+        target.style.backgroundColor = '#edf5e1'
       }
       
       if (el.intersectionRatio >= 0.45 && el.intersectionRatio < 0.75) {
-        target.classList.remove('green')
-        target.classList.add('blue')
-        target.classList.remove('red')
+        target.style.backgroundColor = '#1da9e1'
       }
       
       if (el.intersectionRatio > 0.90) {
-        target.classList.remove('green')
-        target.classList.remove('blue')
-        target.classList.add('red')
+        target.style.backgroundColor = '#ed55e1'
       }
     }
   })

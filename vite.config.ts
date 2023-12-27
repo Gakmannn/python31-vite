@@ -17,6 +17,8 @@ export default {
         omdb: resolve(__dirname, 'omdb.html'),
         // @ts-ignore
         yaPic: resolve(__dirname, 'yapic.html'),
+        // @ts-ignore
+        server: resolve(__dirname, 'server.html'),
       }
     }
   }

@@ -37,6 +37,17 @@ a {
   transition: 1s all;
 }
 
+.green {
+  background-color: #edf5e1;
+}
+.blue {
+  background-color: #1da9e1;
+}
+.red {
+  background-color: #ed55e1;
+}
+
+
 .news {
   max-width: 600px;
   margin: 0 auto;
@@ -46,14 +57,8 @@ a {
   /* transition: background-color 0.5s; */
 }
 
-.green {
-  background-color: #edf5e1;
-}
-.blue {
-  background-color: #1da9e1;
-}
-.red {
-  background-color: #ed55e1;
+#news {
+  transition: 1s;
 }
 
 .close {
