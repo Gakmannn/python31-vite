@@ -5,7 +5,7 @@ let obj = {} as any
 const appDiv = document.getElementById('app') as HTMLDivElement
 
 function download() {
-  fetch('http://localhost:3000/mydata')
+  fetch('http://localhost:3001/mydata')
     .then(responce => responce.json())
     .then(data => {
       Object.assign(obj, data.data)
@@ -31,7 +31,7 @@ function render(obj: any) {
 document.addEventListener('click', async (e)=>{  
   const target = e.target as HTMLElement
   if (target.tagName=='BUTTON' && target.dataset.key) { 
-    const res = await fetch(`http://localhost:3000/mydata/${target.dataset.key}`, {
+    const res = await fetch(`http://localhost:3001/mydata/${target.dataset.key}`, {
       method: 'DELETE',
     })
     const data = await res.json()
@@ -50,7 +50,7 @@ document.addEventListener('keydown', async (e)=>{
       const valInput = document.getElementById('val') as HTMLInputElement
       obj[keyInput.value] = valInput.value
     }
-    const res = await fetch('http://localhost:3000/mydata', {
+    const res = await fetch('http://localhost:3001/mydata', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
