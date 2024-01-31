@@ -4599,3 +4599,24 @@ submitCanvas.addEventListener('click', async() => {
   let result = await response.json();
   
 })
+
+let timer:NodeJS.Timeout
+const lC = document.querySelector('.longClick') as HTMLDivElement
+const lCDiv = document.querySelector('.longClick div') as HTMLDivElement
+lC.addEventListener('pointerdown',(e)=>{
+  const target = e.target as HTMLElement
+  if (target.tagName=='BUTTON') {
+    if (target.dataset.text) lCDiv.innerText = target.dataset.text
+    target.style.backgroundColor = 'yellow'
+    timer = setTimeout(()=>{
+      target.style.backgroundColor = 'red'
+    }, 1000)
+  }
+})
+lC.addEventListener('pointerup',(e)=>{
+  const target = e.target as HTMLElement
+  if (target.tagName=='BUTTON') {
+    clearTimeout(timer)
+    lCDiv.innerText = ''
+  }
+})
